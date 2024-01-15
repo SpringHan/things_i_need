@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
-    background: Colors.grey.shade400,
-    primary: Colors.grey.shade200,
-    secondary: Colors.grey.shade300,
+    background: Colors.grey.shade300,
+    primary: Colors.white,
+    secondary: Colors.grey.shade200,
+    shadow: Colors.grey.withOpacity(0.5),
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.grey.shade900,
   ),
 );
 

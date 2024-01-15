@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       dark: darkMode,
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: title,
         theme: theme,
         darkTheme: darkTheme,

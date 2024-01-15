@@ -10,26 +10,47 @@ class ThingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: FractionallySizedBox(
-        widthFactor: 0.9,
-        heightFactor: 0.15,
-        alignment: FractionalOffset.center,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 0),
-            borderRadius: BorderRadius.circular(30),
-            // boxShadow: [
-            //   BoxShadow(
-            //   ),
-            // ],
+    return Container(
+      width: 350,
+      height: 80,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow,
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
           ),
-          child: Row(
-            children: [
-              Text(thing),
-            ],
-          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+          left: 20,
+          right: 20,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                thing,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            Icon(
+              Icons.check_box_outline_blank,
+              size: 40,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ],
         ),
       ),
     );
