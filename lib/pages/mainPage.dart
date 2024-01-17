@@ -6,9 +6,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ThingsList(
-      thingsFor: "Test",
-      things: ["a", "b"],
+    return Container(
+      width: 400,
+      child: ThingsList(
+        thingsFor: "Test",
+        things: ["Width", "Others"],
+      ),
     );
   }
 }

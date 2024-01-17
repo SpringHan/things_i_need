@@ -8,7 +8,6 @@ class ThingsList extends StatelessWidget {
       required this.things,
   });
 
-  
   final String thingsFor;
   final List<String> things;
 
@@ -16,7 +15,12 @@ class ThingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: things.length,
-      itemBuilder: (context, idx) => ThingsCard(thing: things[idx]),
+      itemBuilder: (context, idx) {
+        return Align(
+          alignment: Alignment.center,
+          child: ThingsCard(thing: things[idx]),
+        );
+      },
     );
   }
 }

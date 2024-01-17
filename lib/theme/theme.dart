@@ -9,9 +9,6 @@ ThemeData lightMode = ThemeData(
     secondary: Colors.grey.shade200,
     shadow: Colors.grey.withOpacity(0.5),
   ),
-  iconTheme: IconThemeData(
-    color: Colors.grey.shade900,
-  ),
 );
 
 ThemeData darkMode = ThemeData(
@@ -20,5 +17,21 @@ ThemeData darkMode = ThemeData(
     background: Colors.grey.shade900,
     primary: Colors.grey.shade700,
     secondary: Colors.grey.shade800,
+    shadow: Colors.grey.shade900,
   ),
 );
+
+typedef ColorMap = Map<String, Map<String, Color>>;
+
+extension FetchColorMap on ColorMap {
+  Color fetch({required String item, required String brightness}) {
+    return this[item]![brightness]!;
+  }
+}
+
+final checkBoxColors = <String, Map<String, Color>> {
+  "fillColor": {
+    "light": Colors.blue.shade300,
+    "dark": Colors.grey.shade400,
+  },
+};

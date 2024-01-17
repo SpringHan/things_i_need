@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
-class ThingsCard extends StatelessWidget {
+class ThingsCard extends StatefulWidget {
   const ThingsCard({
       super.key,
       required this.thing,
@@ -9,10 +10,22 @@ class ThingsCard extends StatelessWidget {
   final String thing;
 
   @override
+  State<ThingsCard> createState() => _ThingsCardState();
+}
+
+class _ThingsCardState extends State<ThingsCard> {
+  bool isChecked = false;
+
+  @override
   Widget build(BuildContext context) {
+    var deviceWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: 350,
+      width: deviceWidth * 0.94,
       height: 80,
+      margin: const EdgeInsets.only(
+        top: 10,
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(15),
@@ -38,17 +51,30 @@ class ThingsCard extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                thing,
+                widget.thing,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w400,
                 ),
               ),
             ),
-            Icon(
-              Icons.check_box_outline_blank,
-              size: 40,
-              color: Theme.of(context).iconTheme.color,
+            Transform.scale(
+              scale: 1.25,
+              child: Checkbox(
+                value: isChecked,
+                activeColor: checkBoxColors.fetch(
+                  item: "fillColor",
+                  brightness: Theme.of(context).brightness.name,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                onChanged: (bool? newState) {
+                  setState(() {
+                      isChecked = newState!;
+                  });
+                },
+              ),
             ),
           ],
         ),
