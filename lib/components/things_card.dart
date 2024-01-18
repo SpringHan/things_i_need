@@ -5,26 +5,29 @@ class ThingsCard extends StatefulWidget {
   const ThingsCard({
       super.key,
       required this.thing,
+      required this.haveBeenCheck,
   });
 
   final String thing;
+  final bool haveBeenCheck;
 
   @override
   State<ThingsCard> createState() => _ThingsCardState();
 }
 
 class _ThingsCardState extends State<ThingsCard> {
-  bool isChecked = false;
+  bool? isChecked;
 
   @override
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
+    isChecked = isChecked ?? widget.haveBeenCheck;
 
     return Container(
       width: deviceWidth * 0.94,
       height: 80,
       margin: const EdgeInsets.only(
-        top: 10,
+        bottom: 15,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -34,7 +37,7 @@ class _ThingsCardState extends State<ThingsCard> {
             color: Theme.of(context).colorScheme.shadow,
             spreadRadius: 3,
             blurRadius: 10,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 5),
           ),
         ],
       ),

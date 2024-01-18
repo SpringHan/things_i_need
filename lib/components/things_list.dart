@@ -9,18 +9,34 @@ class ThingsList extends StatelessWidget {
   });
 
   final String thingsFor;
-  final List<String> things;
+  final Map<String, bool> things;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: things.length,
-      itemBuilder: (context, idx) {
-        return Align(
-          alignment: Alignment.center,
-          child: ThingsCard(thing: things[idx]),
-        );
-      },
+    var screenWidth = MediaQuery.of(context).size.width;
+    var cardList = things.entries.map((thing) => ThingsCard(
+        thing: thing.key,
+        haveBeenCheck: thing.value,
+    )).toList();
+
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(
+            left: 0.05 * screenWidth,
+            top: 10,
+          ),
+          child: Text(
+            thingsFor,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ), ...cardList,
+      ],
     );
   }
 }

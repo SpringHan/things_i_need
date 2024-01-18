@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'pages/mainPage.dart';
+import 'pages/main_page.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -10,8 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  final String title = "Stuff List";
-
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
@@ -20,15 +18,10 @@ class MyApp extends StatelessWidget {
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: title,
+        title: "Stuff List",
         theme: theme,
         darkTheme: darkTheme,
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(title),
-          ),
-          body: const HomePage(),
-        ),
+        home: HomePage(),
       ),
     );
   }

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
-    background: Colors.grey.shade300,
+    background: Colors.grey.shade200,
     primary: Colors.white,
-    secondary: Colors.grey.shade200,
+    secondary: Colors.grey.shade100,
     shadow: Colors.grey.withOpacity(0.5),
   ),
 );
@@ -33,5 +33,16 @@ final checkBoxColors = <String, Map<String, Color>> {
   "fillColor": {
     "light": Colors.blue.shade300,
     "dark": Colors.grey.shade400,
+  },
+};
+
+final floatingButtonColors = <String, Map<String, Color>> {
+  "backgroundColor": {
+    "light": Colors.blue.shade400,
+    "dark": Colors.blue.shade900,
+  },
+  "foregroundColor": {
+    "light": Colors.white,
+    "dark": Colors.black,
   },
 };
