@@ -8,7 +8,20 @@ base class ThingData {
       required this.checked,
   });
 
-  String? name;
-  DateTime? date;
-  bool? checked;
+  final String? name;
+  final DateTime? date;
+  final bool? checked;
+}
+
+// Future<List<ThingData>> initThingData() async {
+//   final cacheDirectory = await getApplicationCacheDirectory();
+
+//   // var cacheFile = File("${cacheDirectory.path}")
+// }
+
+Future<Directory> initThingData() async {
+  final cacheDirectory = await getApplicationCacheDirectory();
+
+  // var cacheFile = File("${cacheDirectory.path}")
+  return cacheDirectory;
 }
