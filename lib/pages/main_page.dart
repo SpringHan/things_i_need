@@ -17,26 +17,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: ListView(
-        children: const [
-          Text("a"),
-          // FutureBuilder(
-          //   future: initThingData(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       var files = snapshot.data!;
-
-          //       return Text("a");
-          //       // return ThingsList(
-          //       //   thingsFor: "Today",
-          //       //   things: {
-          //       //   },
-          //       // );
-          //     } else {
-          //       return const Text("Empty");
-          //     }
-          //   },
-          // ),
-        ],
+        children: const [],
       ),
       floatingActionButton: ThingsAddButton(),
     );
