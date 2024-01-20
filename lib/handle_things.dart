@@ -1,22 +1,13 @@
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'dart:async' show FutureOr;
 import 'dart:convert' show jsonDecode, jsonEncode;
 
 base class ThingData {
-  ThingData({
-      required this.name,
-      required this.date,
-      required this.checked,
-  });
+  ThingData(this.date, this.things);
 
-  ThingData.fromJson(Map<String, dynamic> json)
-  : name = json["name"]!,
-  date = json["date"]!,
-  checked = json["checked"];
-
-  final String? name;
-  final DateTime? date;
-  final bool? checked;
+  final String date;
+  final Map<String, bool> things;
 }
 
 Future<List<ThingData>> fetchThingData() async {
@@ -33,22 +24,30 @@ Future<List<ThingData>> fetchThingData() async {
     return [];
   }
 
-  List<Map<String, dynamic>> thingsList = jsonDecode(fileContent);
-  var finalList = thingsList.fold(<ThingData>[], (acc, item) {
-      acc.add(ThingData.fromJson(item));
-      return acc;
-  });
+  List<ThingData> finalData = [];
+  Map<String, dynamic> thingsList = jsonDecode(fileContent);
+  for (final thingWithDate in thingsList.entries) {
+    finalData.add(ThingData(
+        thingWithDate.key,
+        thingWithDate.value,
+    ));
+  }
 
-  return finalList;
+  return finalData;
 }
 
-Future<void> storeThings(List<Map<String, dynamic>> thingList) async {
+Future<void> storeThings(FutureOr<List<ThingData>> thingList) async {
   final storageDirectory = await getExternalStorageDirectory();
   var listFile = File("${storageDirectory!.path}/thingsList.json");
   if (!(await listFile.exists())) {
     listFile = await listFile.create();
   }
 
-  final fileContent = jsonEncode(thingList);
+  Map<String, dynamic> originData = {};
+  for (final thing in await thingList) {
+    originData[thing.date] = thing.things;
+  }
+
+  final fileContent = jsonEncode(originData);
   await listFile.writeAsString(fileContent);
 }

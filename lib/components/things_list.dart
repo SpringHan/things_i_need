@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import './things_card.dart';
+import '../handle_things.dart' show ThingData;
 
 class ThingsList extends StatelessWidget {
-  const ThingsList({
-      super.key,
-      required this.thingsFor,
-      required this.things,
-  });
+  ThingsList(ThingData list, {super.key})
+  : date = list.date, things = list.things;
 
-  final String thingsFor;
+  final String date;
   final Map<String, bool> things;
 
   @override
@@ -28,7 +26,7 @@ class ThingsList extends StatelessWidget {
             top: 10,
           ),
           child: Text(
-            thingsFor,
+            date,
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w400,
