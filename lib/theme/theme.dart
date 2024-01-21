@@ -1,25 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:adaptive_theme/adaptive_theme.dart';
-
-ThemeData lightMode = ThemeData(
-  brightness: Brightness.light,
-  colorScheme: ColorScheme.light(
-    background: Colors.grey.shade200,
-    primary: Colors.white,
-    secondary: Colors.grey.shade100,
-    shadow: Colors.grey.withOpacity(0.5),
-  ),
-);
-
-ThemeData darkMode = ThemeData(
-  brightness: Brightness.dark,
-  colorScheme: ColorScheme.dark(
-    background: Colors.grey.shade900,
-    primary: Colors.grey.shade700,
-    secondary: Colors.grey.shade800,
-    shadow: Colors.grey.shade900,
-  ),
-);
 
 typedef ColorMap = Map<String, Map<String, Color>>;
 
@@ -28,21 +7,3 @@ extension FetchColorMap on ColorMap {
     return this[item]![brightness]!;
   }
 }
-
-final checkBoxColors = <String, Map<String, Color>> {
-  "fillColor": {
-    "light": Colors.blue.shade300,
-    "dark": Colors.grey.shade400,
-  },
-};
-
-final floatingButtonColors = <String, Map<String, Color>> {
-  "backgroundColor": {
-    "light": Colors.blue.shade400,
-    "dark": Colors.blue.shade900,
-  },
-  "foregroundColor": {
-    "light": Colors.white,
-    "dark": Colors.black,
-  },
-};

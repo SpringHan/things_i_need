@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'pages/main_page.dart';
-import 'theme/theme.dart';
+import 'pages/add_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +21,28 @@ class MyApp extends StatelessWidget {
         title: "Stuff List",
         theme: theme,
         darkTheme: darkTheme,
-        home: HomePage(),
+        home: AddPage(),
       ),
     );
   }
 }
+
+ThemeData lightMode = ThemeData(
+  brightness: Brightness.light,
+  colorScheme: ColorScheme.light(
+    background: Colors.grey.shade200,
+    primary: Colors.white,
+    secondary: Colors.grey.shade100,
+    shadow: Colors.grey.withOpacity(0.5),
+  ),
+);
+
+ThemeData darkMode = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.dark(
+    background: Colors.grey.shade900,
+    primary: Colors.grey.shade700,
+    secondary: Colors.grey.shade800,
+    shadow: Colors.grey.shade900,
+  ),
+);

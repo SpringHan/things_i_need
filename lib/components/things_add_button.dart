@@ -21,3 +21,14 @@ class ThingsAddButton extends StatelessWidget {
     );
   }
 }
+
+final floatingButtonColors = <String, Map<String, Color>> {
+  "backgroundColor": {
+    "light": Colors.blue.shade400,
+    "dark": Colors.blue.shade900,
+  },
+  "foregroundColor": {
+    "light": Colors.white,
+    "dark": Colors.black,
+  },
+};

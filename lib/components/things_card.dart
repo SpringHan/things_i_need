@@ -85,3 +85,10 @@ class _ThingsCardState extends State<ThingsCard> {
     );
   }
 }
+
+final checkBoxColors = <String, Map<String, Color>> {
+  "fillColor": {
+    "light": Colors.blue.shade300,
+    "dark": Colors.grey.shade400,
+  },
+};
