@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'pages/main_page.dart';
-import 'pages/add_page.dart';
+import './pages/page_stack.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         title: "Stuff List",
         theme: theme,
         darkTheme: darkTheme,
-        home: AddPage(),
+        home: PageStack(),
       ),
     );
   }

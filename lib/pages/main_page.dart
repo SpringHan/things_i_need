@@ -3,8 +3,8 @@ import '../components/things_list.dart';
 import '../components/things_add_button.dart';
 import '../handle_things.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
 
             return ListView(
               children: const [
-                Text("test"),
+                Text(""),
               ],
             );
           },

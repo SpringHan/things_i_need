@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/new_thing_input.dart';
 import '../components/date_switch.dart';
+import '../theme/theme.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -13,11 +14,8 @@ class _AddPage extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          alignment: Alignment.center,
-          child: const Text("New Stuff"),
-        ),
+      backgroundColor: pageBackgroundColor.fetch(
+        Theme.of(context).brightness.name
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -34,3 +32,8 @@ class _AddPage extends State<AddPage> {
     );
   }
 }
+
+final pageBackgroundColor = <String, Color> {
+  "light": Colors.white.withOpacity(0.4),
+  "dark": Colors.black.withOpacity(0.3),
+};
