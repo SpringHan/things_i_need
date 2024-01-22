@@ -3,11 +3,36 @@ import 'dart:io';
 import 'dart:async' show FutureOr;
 import 'dart:convert' show jsonDecode, jsonEncode;
 
+enum ThingInsertCase {
+  oldInsert,
+  newInsert,
+}
+
 base class ThingData {
   ThingData(this.date, this.things);
 
   final String date;
   final Map<String, bool> things;
+
+  int compare(DateTime date) {
+    return date.compareTo(DateTime.parse(this.date));
+  }
+
+  static (int, ThingInsertCase) newInsertIdx(
+    List<ThingData> data,
+    DateTime date
+  ) {
+    for (var i = 0; i < data.length; i++) {
+      switch (data[i].compare(date)) {
+        case 0:
+        return (i, ThingInsertCase.oldInsert);
+        case -1:
+        return (i == 0 ? 0 : i - 1, ThingInsertCase.newInsert);
+      }
+    }
+
+    return (data.length, ThingInsertCase.newInsert);
+  }
 }
 
 Future<List<ThingData>> fetchThingData() async {
