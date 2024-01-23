@@ -12,10 +12,14 @@ base class ThingData {
   ThingData(this.date, this.things);
 
   final String date;
-  final Map<String, bool> things;
+  Map<String, bool> things;
 
-  int compare(DateTime date) {
-    return date.compareTo(DateTime.parse(this.date));
+  int compare(DateTime newDate) {
+    return newDate.compareTo(DateTime.parse(date));
+  }
+
+  void removeTickedItems() {
+    things = Map.fromEntries(things.entries.where((i) => !i.value));
   }
 
   static (int, ThingInsertCase) newInsertIdx(

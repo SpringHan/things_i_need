@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../components/data_provider.dart';
 import '../theme/theme.dart';
 
 class ThingsAddButton extends StatelessWidget {
@@ -16,6 +18,10 @@ class ThingsAddButton extends StatelessWidget {
         brightness: Theme.of(context).brightness.name,
       ),
       onPressed: () {
+        context.read<DataProvider>().addPageChange();
+        context.read<DataProvider>().newThingInit();
+        context.read<DataProvider>().textFieldFocus.requestFocus();
+        context.read<DataProvider>().textController.clear();
       },
       child: const Icon(Icons.add),
     );

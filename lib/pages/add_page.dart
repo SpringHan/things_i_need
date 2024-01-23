@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+import '../components/data_provider.dart';
+
 import '../components/new_thing_input.dart';
 import '../components/date_switch.dart';
+import '../components/add_new_button.dart';
+
 import '../theme/theme.dart';
 
 class AddPage extends StatefulWidget {
@@ -17,15 +23,45 @@ class _AddPage extends State<AddPage> {
       backgroundColor: pageBackgroundColor.fetch(
         Theme.of(context).brightness.name
       ),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: AddNewButton(
+                  content: "Cancel",
+                  onPressedFunc: () {
+                    context.read<DataProvider>().addPageChange();
+                  },
+                ),
+              ),
+            ),
+            AddNewButton(
+              content: "Finish",
+              onPressedFunc: () async {
+                var provider = context.read<DataProvider>();
+                provider.addPageChange();
+                if (provider.newThing.$1.isEmpty) {
+                  return;
+                }
+
+                await provider.addThing(provider.newThing);
+                provider.addPageChange();
+              },
+            ),
+          ],
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          NewThingInput(),
+          const NewThingInput(),
           Container(
             margin: const EdgeInsets.only(
               top: 10,
             ),
-            child: DateSwitch(),
+            child: const DateSwitch(),
           ),
         ],
       ),

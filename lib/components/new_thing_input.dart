@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../components/data_provider.dart';
 
 class NewThingInput extends StatefulWidget {
-  const NewThingInput({
-      super.key,
-      this.inputInfo,
-  });
-
-  final String? inputInfo;
+  const NewThingInput({super.key});
 
   @override
   State<NewThingInput> createState() => _NewThingInput();
 }
 
 class _NewThingInput extends State<NewThingInput> {
-  late String input;
-
   bool _showIcon = false;
-  final _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +20,14 @@ class _NewThingInput extends State<NewThingInput> {
         right: 20,
       ),
       child: TextField(
-        controller: _textController,
+        controller: context.watch<DataProvider>().textController,
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
           suffixIcon: _showIcon
           ? IconButton(
             icon: const Icon(Icons.clear),
             onPressed: () {
-              _textController.clear();
+              context.read<DataProvider>().textController.clear();
               setState(() {
                   _showIcon = false;
               });
@@ -46,6 +40,7 @@ class _NewThingInput extends State<NewThingInput> {
               _showIcon = text.isNotEmpty;
           });
         },
+        focusNode: context.watch<DataProvider>().textFieldFocus,
       ),
     );
   }

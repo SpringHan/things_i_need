@@ -18,26 +18,26 @@ class MainPage extends StatelessWidget {
         ),
       ),
       body: FutureBuilder(
-          future: thingsList,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<ThingsList> cardList = [];
-              for (final thing in snapshot.data!) {
-                cardList.add(ThingsList(thing));
-              }
-
-              return ListView(
-                children: cardList,
-              );
+        future: thingsList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<ThingsList> cardList = [];
+            for (final thing in snapshot.data!) {
+              cardList.add(ThingsList(thing));
             }
 
             return ListView(
-              children: const [
-                Text(""),
-              ],
+              children: cardList,
             );
-          },
-        ),
+          }
+
+          return ListView(
+            children: const [
+              Text(""),
+            ],
+          );
+        },
+      ),
       floatingActionButton: ThingsAddButton(),
     );
   }

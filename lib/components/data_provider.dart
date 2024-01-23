@@ -2,69 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import '../handle_things.dart';
 
-class DataProviderWidget extends StatefulWidget {
-  const DataProviderWidget({
-      super.key,
-      required this.child,
-  });
-
-  final Widget child;
-
-  @override
-  State<DataProviderWidget> createState() => _DataProviderWidget();
-}
-
-class _DataProviderWidget extends State<DataProviderWidget> {
+class DataProvider extends ChangeNotifier {
   bool usingAddPage = false;
   List<ThingData> thingData = [];
 
-  void addPageChange(bool newVal) {
-    setState(() {
-        usingAddPage = !newVal;
-    });
+  // Add Page
+  FocusNode textFieldFocus = FocusNode();
+  TextEditingController textController = TextEditingController();
+
+  //The data for add_page
+  (String, DateTime) newThing = ("", DateTime.now());
+
+  void addPageChange() {
+    usingAddPage = !usingAddPage;
+    notifyListeners();
   }
 
-  void addThing(DateTime date, String thing) {
-    final formatedDate = DateFormat("yyyy/MM/dd").format(date);
-    final (insertIdx, insertWay) = ThingData.newInsertIdx(thingData, date);
+  Future<void> addThing((String, DateTime) newThingData) async {
+    final formatedDate = DateFormat("yyyy/MM/dd").format(newThingData.$2);
+    final (insertIdx, insertWay) = ThingData.newInsertIdx(
+      thingData,
+      newThingData.$2
+    );
 
-    setState(() {
-        if (insertWay == ThingInsertCase.oldInsert) {
-          thingData[insertIdx].things[thing] = false;
-        } else {
-          thingData.insert(insertIdx, ThingData(
-              formatedDate,
-              {thing: false}
-          ));
-        }
-    });
-  }
-}
+    if (insertWay == ThingInsertCase.oldInsert) {
+      thingData[insertIdx].things[newThingData.$1] = false;
+    } else {
+      thingData.insert(insertIdx, ThingData(formatedDate, {
+            newThingData.$1: false
+      }));
+    }
 
-class DataProvider extends InheritedWidget {
-  const DataProvider({
-      super.key,
-      required super.child,
-      required this.usingAddPage,
-      required this.thingData,
-      required this.boolChangeFunc,
-      required this.addFunction,
-      required this.removeFunction,
-  });
-
-  final bool usingAddPage;
-  final List<ThingData> thingData;
-  final ValueChanged<bool> boolChangeFunc;
-  final void Function(DateTime, String) addFunction;
-  final ValueChanged<List<ThingData>> removeFunction;
-
-  static DataProvider of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType()! as DataProvider;
+    await storeThings(thingData);
+    notifyListeners();
   }
 
-  @override
-  bool updateShouldNotify(DataProvider oldWidget) {
-    return oldWidget.usingAddPage != usingAddPage
-    || oldWidget.thingData != thingData;
+  Future<void> removeTicked() async {
+    List<ThingData> newList = [];
+
+    for (var thing in thingData) {
+      thing.removeTickedItems();
+      newList.add(thing);
+    }
+    thingData = newList;
+
+    await storeThings(thingData);
+    notifyListeners();
+  }
+
+  void newThingInit() {
+    newThing = ("", newThing.$2);
+    notifyListeners();
+  }
+
+  void newDate(DateTime newDate) {
+    newThing = (newThing.$1, newDate);
+    notifyListeners();
+  }
+
+  void focusNodeDispose() {
+    textFieldFocus.dispose();
   }
 }
