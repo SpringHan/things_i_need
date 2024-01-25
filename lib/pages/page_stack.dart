@@ -22,7 +22,7 @@ class _PageStack extends State<PageStack> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DataProvider()),
-        ChangeNotifierProvider(create: (_) => WidgetsProvider(),)
+        ChangeNotifierProvider(create: (_) => WidgetsProvider()),
       ],
       builder: (context, _) {
         return Stack(
