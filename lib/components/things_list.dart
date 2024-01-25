@@ -29,7 +29,7 @@ class ThingsList extends StatelessWidget {
             date,
             style: const TextStyle(
               fontSize: 28,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w300,
             ),
             textAlign: TextAlign.left,
           ),

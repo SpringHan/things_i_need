@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "Stuff List",
+        title: "Things I Need",
         theme: theme,
         darkTheme: darkTheme,
-        home: PageStack(),
+        home: const PageStack(),
       ),
     );
   }

@@ -30,7 +30,7 @@ class _AddPage extends State<AddPage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: AddNewButton(
-                  content: "Cancel",
+                  content: "取消",
                   onPressedFunc: () {
                     context.read<DataProvider>().addPageChange();
                   },
@@ -38,15 +38,16 @@ class _AddPage extends State<AddPage> {
               ),
             ),
             AddNewButton(
-              content: "Finish",
+              content: "完成",
               onPressedFunc: () async {
                 var provider = context.read<DataProvider>();
-                provider.addPageChange();
+                provider.thingName = provider.textController.text;
                 if (provider.newThing.$1.isEmpty) {
+                  provider.addPageChange();
                   return;
                 }
 
-                await provider.addThing(provider.newThing);
+                await provider.addThing();
                 provider.addPageChange();
               },
             ),
@@ -70,6 +71,6 @@ class _AddPage extends State<AddPage> {
 }
 
 final pageBackgroundColor = <String, Color> {
-  "light": Colors.white.withOpacity(0.4),
+  "light": Colors.white.withOpacity(0.7),
   "dark": Colors.black.withOpacity(0.3),
 };

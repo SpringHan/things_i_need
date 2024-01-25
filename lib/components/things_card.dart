@@ -25,7 +25,7 @@ class _ThingsCardState extends State<ThingsCard> {
 
     return Container(
       width: deviceWidth * 0.94,
-      height: 80,
+      height: 75,
       margin: const EdgeInsets.only(
         bottom: 15,
       ),

@@ -17,8 +17,6 @@ class _PageStack extends State<PageStack> {
   @override
   Widget build(BuildContext context) {
     toTopDistance = MediaQuery.of(context).size.height;
-    // Debug
-    // toTopDistance = 0;
 
     return MultiProvider(
       providers: [
@@ -29,12 +27,12 @@ class _PageStack extends State<PageStack> {
           fit: StackFit.loose,
           alignment: Alignment.center,
           children: [
-            MainPage(),
+            const MainPage(),
             Positioned.fill(
               top: context.watch<DataProvider>().usingAddPage
               ? 0
               : toTopDistance,
-              child: AddPage()
+              child: const AddPage()
             ),
           ],
         );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/data_provider.dart';
+import '../theme/theme.dart';
 
 class NewThingInput extends StatefulWidget {
   const NewThingInput({super.key});
@@ -45,3 +46,8 @@ class _NewThingInput extends State<NewThingInput> {
     );
   }
 }
+
+final inputColors = <String, Color> {
+  "light": Colors.black,
+  "dark": Colors.white,
+};

@@ -14,20 +14,16 @@ base class ThingData {
   final String date;
   Map<String, bool> things;
 
-  int compare(DateTime newDate) {
-    return newDate.compareTo(DateTime.parse(date));
-  }
-
   void removeTickedItems() {
     things = Map.fromEntries(things.entries.where((i) => !i.value));
   }
 
   static (int, ThingInsertCase) newInsertIdx(
     List<ThingData> data,
-    DateTime date
+    String date
   ) {
     for (var i = 0; i < data.length; i++) {
-      switch (data[i].compare(date)) {
+      switch (date.compareDate(data[i].date)) {
         case 0:
         return (i, ThingInsertCase.oldInsert);
         case -1:
@@ -36,6 +32,26 @@ base class ThingData {
     }
 
     return (data.length, ThingInsertCase.newInsert);
+  }
+}
+
+extension DateCompare on String {
+  int compareDate(String another) {
+    final originList = split("/");
+    final anotherList = another.split("/");
+
+    for (var i = 0; i < 3; i++) {
+      final result = originList[i]._innerCompare(anotherList[i]);
+      if (result != 0) {
+        return result;
+      }
+    }
+
+    return 0;
+  }
+
+  int _innerCompare(String another) {
+    return int.parse(this).compareTo(int.parse(another));
   }
 }
 
@@ -56,9 +72,14 @@ Future<List<ThingData>> fetchThingData() async {
   List<ThingData> finalData = [];
   Map<String, dynamic> thingsList = jsonDecode(fileContent);
   for (final thingWithDate in thingsList.entries) {
+    Map<String, bool> tempThings = {};
+    for (final thing in thingWithDate.value.entries) {
+      tempThings[thing.key] = thing.value;
+    }
+
     finalData.add(ThingData(
         thingWithDate.key,
-        thingWithDate.value,
+        tempThings
     ));
   }
 

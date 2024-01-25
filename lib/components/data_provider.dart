@@ -3,6 +3,10 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../handle_things.dart';
 
 class DataProvider extends ChangeNotifier {
+  DataProvider() {
+    fetchStoredThings();
+  }
+
   bool usingAddPage = false;
   List<ThingData> thingData = [];
 
@@ -18,18 +22,18 @@ class DataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addThing((String, DateTime) newThingData) async {
-    final formatedDate = DateFormat("yyyy/MM/dd").format(newThingData.$2);
+  Future<void> addThing() async {
+    final formatedDate = DateFormat("yyyy/MM/dd").format(newThing.$2);
     final (insertIdx, insertWay) = ThingData.newInsertIdx(
       thingData,
-      newThingData.$2
+      formatedDate
     );
 
     if (insertWay == ThingInsertCase.oldInsert) {
-      thingData[insertIdx].things[newThingData.$1] = false;
+      thingData[insertIdx].things[newThing.$1] = false;
     } else {
       thingData.insert(insertIdx, ThingData(formatedDate, {
-            newThingData.$1: false
+            newThing.$1: false
       }));
     }
 
@@ -49,6 +53,13 @@ class DataProvider extends ChangeNotifier {
     await storeThings(thingData);
     notifyListeners();
   }
+
+  Future<void> fetchStoredThings() async {
+    thingData = await fetchThingData();
+    notifyListeners();
+  }
+
+  set thingName(String name) => newThing = (name, newThing.$2);
 
   void newThingInit() {
     newThing = ("", newThing.$2);
