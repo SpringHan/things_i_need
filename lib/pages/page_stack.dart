@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
-import '../components/data_provider.dart';
+import '../provider/data_provider.dart';
+import '../provider/widgets_provider.dart';
+
 import './main_page.dart';
 import './add_page.dart';
 
@@ -12,26 +15,25 @@ class PageStack extends StatefulWidget {
 }
 
 class _PageStack extends State<PageStack> {
-  late double toTopDistance;
-
   @override
   Widget build(BuildContext context) {
-    toTopDistance = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => WidgetsProvider(),)
       ],
-      builder: (context, child) {
+      builder: (context, _) {
         return Stack(
           fit: StackFit.loose,
           alignment: Alignment.center,
           children: [
             const MainPage(),
             Positioned.fill(
-              top: context.watch<DataProvider>().usingAddPage
+              top: context.watch<WidgetsProvider>().usingAddPage
               ? 0
-              : toTopDistance,
+              : screenHeight,
               child: const AddPage()
             ),
           ],

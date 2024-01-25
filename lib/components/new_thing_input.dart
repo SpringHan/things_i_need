@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../components/data_provider.dart';
+import '../provider/widgets_provider.dart';
 import '../theme/theme.dart';
 
 class NewThingInput extends StatefulWidget {
@@ -21,14 +21,37 @@ class _NewThingInput extends State<NewThingInput> {
         right: 20,
       ),
       child: TextField(
-        controller: context.watch<DataProvider>().textController,
+        controller: context.watch<WidgetsProvider>().textController,
+        style: const TextStyle(
+          fontSize: 23,
+          fontWeight: FontWeight.w500,
+        ),
+        cursorColor: inputColors.fetch(
+          item: "unfocusedColor",
+          brightness: Theme.of(context).brightness.name,
+        ),
         decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: inputColors.fetch(
+                item: "unfocusedColor",
+                brightness: Theme.of(context).brightness.name,
+              ),
+            )
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: inputColors.fetch(
+                item: "focusedColor",
+                brightness: Theme.of(context).brightness.name,
+              ),
+            ),
+          ),
           suffixIcon: _showIcon
           ? IconButton(
             icon: const Icon(Icons.clear),
             onPressed: () {
-              context.read<DataProvider>().textController.clear();
+              context.read<WidgetsProvider>().textController.clear();
               setState(() {
                   _showIcon = false;
               });
@@ -41,13 +64,19 @@ class _NewThingInput extends State<NewThingInput> {
               _showIcon = text.isNotEmpty;
           });
         },
-        focusNode: context.watch<DataProvider>().textFieldFocus,
+        focusNode: context.watch<WidgetsProvider>().textFieldFocus,
       ),
     );
   }
 }
 
-final inputColors = <String, Color> {
-  "light": Colors.black,
-  "dark": Colors.white,
+final inputColors = <String, Map<String, Color>> {
+  "unfocusedColor": {
+    "light": Colors.black,
+    "dark": Colors.white,
+  },
+  "focusedColor": {
+    "light": Colors.grey.shade600,
+    "dark": Colors.grey.shade500,
+  },
 };

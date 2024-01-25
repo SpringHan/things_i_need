@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import '../components/data_provider.dart';
+import '../provider/data_provider.dart';
+import '../provider/widgets_provider.dart';
 
 import '../components/new_thing_input.dart';
 import '../components/date_switch.dart';
@@ -32,7 +33,7 @@ class _AddPage extends State<AddPage> {
                 child: AddNewButton(
                   content: "取消",
                   onPressedFunc: () {
-                    context.read<DataProvider>().addPageChange();
+                    context.read<WidgetsProvider>().addPageChange();
                   },
                 ),
               ),
@@ -40,15 +41,16 @@ class _AddPage extends State<AddPage> {
             AddNewButton(
               content: "完成",
               onPressedFunc: () async {
-                var provider = context.read<DataProvider>();
-                provider.thingName = provider.textController.text;
-                if (provider.newThing.$1.isEmpty) {
-                  provider.addPageChange();
+                var widgetProvider = context.read<WidgetsProvider>();
+                var dataProvider = context.read<DataProvider>();
+                dataProvider.thingName = widgetProvider.textController.text;
+                if (dataProvider.newThing.$1.isEmpty) {
+                  widgetProvider.addPageChange();
                   return;
                 }
 
-                await provider.addThing();
-                provider.addPageChange();
+                await dataProvider.addThing();
+                widgetProvider.addPageChange();
               },
             ),
           ],

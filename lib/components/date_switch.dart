@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import '../components/data_provider.dart';
+import '../provider/data_provider.dart';
 
 class DateSwitch extends StatefulWidget {
   const DateSwitch({super.key});

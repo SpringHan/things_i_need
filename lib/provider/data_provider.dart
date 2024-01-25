@@ -7,20 +7,10 @@ class DataProvider extends ChangeNotifier {
     fetchStoredThings();
   }
 
-  bool usingAddPage = false;
   List<ThingData> thingData = [];
-
-  // Add Page
-  FocusNode textFieldFocus = FocusNode();
-  TextEditingController textController = TextEditingController();
 
   //The data for add_page
   (String, DateTime) newThing = ("", DateTime.now());
-
-  void addPageChange() {
-    usingAddPage = !usingAddPage;
-    notifyListeners();
-  }
 
   Future<void> addThing() async {
     final formatedDate = DateFormat("yyyy/MM/dd").format(newThing.$2);
@@ -69,9 +59,5 @@ class DataProvider extends ChangeNotifier {
   void newDate(DateTime newDate) {
     newThing = (newThing.$1, newDate);
     notifyListeners();
-  }
-
-  void focusNodeDispose() {
-    textFieldFocus.dispose();
   }
 }
