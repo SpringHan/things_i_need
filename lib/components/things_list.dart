@@ -3,18 +3,20 @@ import './things_card.dart';
 import '../handle_things.dart' show ThingData;
 
 class ThingsList extends StatelessWidget {
-  ThingsList(ThingData list, {super.key})
+  ThingsList(ThingData list, this._listId, {super.key})
   : date = list.date, things = list.things;
 
   final String date;
   final Map<String, bool> things;
+  final int _listId;
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
     var cardList = things.entries.map((thing) => ThingsCard(
         thing: thing.key,
         haveBeenCheck: thing.value,
+        cardId: _listId,
     )).toList();
 
     return Column(

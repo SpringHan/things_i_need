@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+import '../provider/data_provider.dart';
+
 import '../theme/theme.dart';
 
 class ThingsCard extends StatefulWidget {
@@ -6,10 +10,12 @@ class ThingsCard extends StatefulWidget {
       super.key,
       required this.thing,
       required this.haveBeenCheck,
-  });
+      required int cardId,
+  }) : _cardId = cardId;
 
   final String thing;
   final bool haveBeenCheck;
+  final int _cardId;
 
   @override
   State<ThingsCard> createState() => _ThingsCardState();
@@ -72,10 +78,18 @@ class _ThingsCardState extends State<ThingsCard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                onChanged: (bool? newState) {
-                  setState(() {
-                      isChecked = newState!;
-                  });
+                onChanged: (bool? newState) async {
+                  context.read<DataProvider>().tickOrUntick(
+                    listId: widget._cardId,
+                    thingName: widget.thing,
+                    newValue: newState!
+                  );
+
+                  if (mounted) {
+                    setState(() {
+                        isChecked = newState;
+                    });
+                  }
                 },
               ),
             ),

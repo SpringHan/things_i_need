@@ -14,14 +14,25 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "列表",
+            Container(
+              margin: const EdgeInsets.only(
+                left: 10,
+              ),
+              child: const Text("列表"),
             ),
-            ClearTickedButton(),
-          ]
+            Builder(
+              builder: (context) {
+                if (context.watch<DataProvider>().thingData.isEmpty) {
+                  return const Text("");
+                }
+
+                return const ClearTickedButton();
+              }
+            ),
+          ],
         ),
       ),
       body: Builder(
@@ -32,26 +43,13 @@ class MainPage extends StatelessWidget {
           }
           
           List<ThingsList> widgets = [];
-          for (final card in cardList) {
-            widgets.add(ThingsList(card));
+          for (var i = 0; i < cardList.length; i++) {
+            widgets.add(ThingsList(cardList[i], i));
           }
-          return ListView(
-            children: widgets,
-          );
+          return ListView(children: widgets);
         },
       ),
       floatingActionButton: const ThingsAddButton(),
     );
-    // Builder(
-    //   builder: (context) {
-    //     if (context.watch<DataProvider>().thingData.isEmpty) {
-    //       return const Text("");
-    //     }
-
-    //     return Positioned(
-    //       child: const ClearTickedButton(),
-    //     );
-    //   }
-    // ),
   }
 }

@@ -36,7 +36,10 @@ class DataProvider extends ChangeNotifier {
 
     for (var thing in thingData) {
       thing.removeTickedItems();
-      newList.add(thing);
+
+      if (thing.things.isNotEmpty) {
+        newList.add(thing);
+      }
     }
     thingData = newList;
 
@@ -47,6 +50,16 @@ class DataProvider extends ChangeNotifier {
   Future<void> fetchStoredThings() async {
     thingData = await fetchThingData();
     notifyListeners();
+  }
+
+  // NOTE: To improve performance, the notifying function is not called. 
+  Future<void> tickOrUntick({
+      required int listId,
+      required bool newValue,
+      required String thingName
+  }) async {
+    thingData[listId].things[thingName] = newValue;
+    await storeThings(thingData);
   }
 
   set thingName(String name) => newThing = (name, newThing.$2);

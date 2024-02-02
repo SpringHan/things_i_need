@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/data_provider.dart';
 
 class ClearTickedButton extends StatelessWidget {
   const ClearTickedButton({super.key});
@@ -9,7 +11,8 @@ class ClearTickedButton extends StatelessWidget {
       scale: 1.25,
       child: IconButton(
         icon: const Icon(Icons.delete_outline),
-        onPressed: () {
+        onPressed: () async {
+          await context.read<DataProvider>().removeTicked();
         },
       ),
     );
