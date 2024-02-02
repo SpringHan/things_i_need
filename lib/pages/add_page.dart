@@ -73,6 +73,6 @@ class _AddPage extends State<AddPage> {
 }
 
 final pageBackgroundColor = <String, Color> {
-  "light": Colors.white.withOpacity(0.7),
-  "dark": Colors.black.withOpacity(0.3),
+  "light": Colors.white.withOpacity(0.9),
+  "dark": Colors.black.withOpacity(0.9),
 };

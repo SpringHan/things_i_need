@@ -12,49 +12,46 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final screenHeight = MediaQuery.of(context).size.height;
-
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            title: Container(
-              alignment: Alignment.center,
-              child: const Text("列表"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "列表",
             ),
-          ),
-          body: Builder(
-            builder: (context) {
-              var cardList = context.watch<DataProvider>().thingData;
-              if (cardList.isEmpty) {
-                return const Text("");
-              }
-              
-              List<ThingsList> widgets = [];
-              for (final card in cardList) {
-                widgets.add(ThingsList(card));
-              }
-              return ListView(
-                children: widgets,
-              );
-            },
-          ),
-          floatingActionButton: const ThingsAddButton(),
+            ClearTickedButton(),
+          ]
         ),
-        Builder(
-          builder: (context) {
-            if (context.watch<DataProvider>().thingData.isEmpty) {
-              return const Text("");
-            }
-
-            return const Positioned(
-              top: 28,
-              right: 8,
-              child: ClearTickedButton(),
-            );
+      ),
+      body: Builder(
+        builder: (context) {
+          var cardList = context.watch<DataProvider>().thingData;
+          if (cardList.isEmpty) {
+            return const Text("");
           }
-        ),
-      ],
+          
+          List<ThingsList> widgets = [];
+          for (final card in cardList) {
+            widgets.add(ThingsList(card));
+          }
+          return ListView(
+            children: widgets,
+          );
+        },
+      ),
+      floatingActionButton: const ThingsAddButton(),
     );
+    // Builder(
+    //   builder: (context) {
+    //     if (context.watch<DataProvider>().thingData.isEmpty) {
+    //       return const Text("");
+    //     }
+
+    //     return Positioned(
+    //       child: const ClearTickedButton(),
+    //     );
+    //   }
+    // ),
   }
 }

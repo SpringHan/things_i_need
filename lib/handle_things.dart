@@ -22,12 +22,14 @@ base class ThingData {
     List<ThingData> data,
     String date
   ) {
+    if (data.isEmpty) return (0, ThingInsertCase.newInsert);
+
     for (var i = 0; i < data.length; i++) {
       switch (date.compareDate(data[i].date)) {
         case 0:
         return (i, ThingInsertCase.oldInsert);
         case -1:
-        return (i == 0 ? 0 : i - 1, ThingInsertCase.newInsert);
+        return (i, ThingInsertCase.newInsert);
       }
     }
 

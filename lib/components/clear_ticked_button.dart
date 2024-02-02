@@ -8,7 +8,7 @@ class ClearTickedButton extends StatelessWidget {
     return Transform.scale(
       scale: 1.25,
       child: IconButton(
-        icon: Icon(Icons.delete_outline),
+        icon: const Icon(Icons.delete_outline),
         onPressed: () {
         },
       ),
