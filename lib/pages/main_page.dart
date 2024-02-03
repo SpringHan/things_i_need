@@ -36,6 +36,7 @@ class MainPage extends StatelessWidget {
         ),
       ),
       body: Builder(
+        // key: ValueKey(cardList),
         builder: (context) {
           var cardList = context.watch<DataProvider>().thingData;
           if (cardList.isEmpty) {

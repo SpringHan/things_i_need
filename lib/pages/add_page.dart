@@ -33,7 +33,14 @@ class _AddPage extends State<AddPage> {
                 child: AddNewButton(
                   content: "取消",
                   onPressedFunc: () {
-                    context.read<WidgetsProvider>().addPageChange();
+                    var dataProvider = context.read<DataProvider>();
+                    var widgetProvider = context.read<WidgetsProvider>();
+
+                    if (dataProvider.editMode.modifyMode) {
+                      dataProvider.quitModifyMode();
+                    }
+                    widgetProvider.addPageChange();
+                    widgetProvider.unfocus();
                   },
                 ),
               ),
@@ -44,13 +51,20 @@ class _AddPage extends State<AddPage> {
                 var widgetProvider = context.read<WidgetsProvider>();
                 var dataProvider = context.read<DataProvider>();
                 dataProvider.thingName = widgetProvider.textController.text;
-                if (dataProvider.newThing.$1.isEmpty) {
-                  widgetProvider.addPageChange();
-                  return;
+
+                if (dataProvider.newThing.$1.isNotEmpty) {
+                  if (dataProvider.editMode.modifyMode) {
+                    await dataProvider.modifyThing();
+                  } else {
+                    await dataProvider.addThing();
+                  }
                 }
 
-                await dataProvider.addThing();
+                if (dataProvider.editMode.modifyMode) {
+                  dataProvider.quitModifyMode();
+                }
                 widgetProvider.addPageChange();
+                widgetProvider.unfocus();
               },
             ),
           ],

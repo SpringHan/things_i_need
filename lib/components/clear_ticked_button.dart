@@ -12,7 +12,9 @@ class ClearTickedButton extends StatelessWidget {
       child: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {
-          await context.read<DataProvider>().removeTicked();
+          await context.read<DataProvider>().formatAllThings(
+            removeTicked: true
+          );
         },
       ),
     );

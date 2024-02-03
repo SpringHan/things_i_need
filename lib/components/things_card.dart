@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import '../provider/data_provider.dart';
+import '../provider/widgets_provider.dart';
 
 import '../theme/theme.dart';
 
@@ -22,12 +23,23 @@ class ThingsCard extends StatefulWidget {
 }
 
 class _ThingsCardState extends State<ThingsCard> {
-  bool? isChecked;
+  late bool isChecked;
+
+  @override
+  void initState() {
+    super.initState();
+    isChecked = widget.haveBeenCheck;
+  }
+
+  @override
+  void didUpdateWidget(ThingsCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    isChecked = widget.haveBeenCheck;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var deviceWidth = MediaQuery.of(context).size.width;
-    isChecked = isChecked ?? widget.haveBeenCheck;
+    final deviceWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: deviceWidth * 0.94,
@@ -59,11 +71,24 @@ class _ThingsCardState extends State<ThingsCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: Text(
-                widget.thing,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400,
+              child: GestureDetector(
+                onTap: () {
+                  var widgetProvider = context.read<WidgetsProvider>();
+
+                  context.read<DataProvider>().modifyNewThing(
+                    widget._cardId,
+                    widget.thing
+                  );
+                  widgetProvider.textController.text = widget.thing;
+                  widgetProvider.addPageChange();
+                  widgetProvider.textFieldFocus.requestFocus();
+                },
+                child: Text(
+                  widget.thing,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ),

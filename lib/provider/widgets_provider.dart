@@ -12,6 +12,12 @@ class WidgetsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void unfocus() {
+    if (textFieldFocus.hasFocus) {
+      textFieldFocus.unfocus();
+    }
+  }
+
   // void focusNodeDispose() {
   //   textFieldFocus.dispose();
   // }

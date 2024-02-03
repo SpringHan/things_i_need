@@ -12,13 +12,16 @@ class DateSwitch extends StatefulWidget {
 class _DateSwitch extends State<DateSwitch> {
   @override
   Widget build(BuildContext context) {
+    var date = context.watch<DataProvider>().initDate;
+
     return SizedBox(
       height: 280,
       child: CupertinoDatePicker(
+        key: ValueKey<DateTime>(date),
         itemExtent: 45,
-        initialDateTime: context.watch<DataProvider>().newThing.$2,
+        initialDateTime: date,
         onDateTimeChanged: (DateTime newDate) {
-          context.read<DataProvider>().newDate(newDate);
+          context.read<DataProvider>().newDate = newDate;
         },
         mode: CupertinoDatePickerMode.date,
       ),
