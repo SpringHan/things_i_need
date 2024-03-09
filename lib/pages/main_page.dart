@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import '../provider/data_provider.dart';
+import '../provider/widgets_provider.dart';
 
 import '../components/things_list.dart';
 import '../components/things_add_button.dart';
-import '../components/clear_ticked_button.dart';
+import '../components/reorder_button.dart';
+import '../components/main_page_appbar.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -14,31 +16,11 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                left: 10,
-              ),
-              child: const Text("列表"),
-            ),
-            Builder(
-              builder: (context) {
-                if (context.watch<DataProvider>().thingData.isEmpty) {
-                  return const Text("");
-                }
-
-                return const ClearTickedButton();
-              }
-            ),
-          ],
-        ),
+        title: const MainPageAppBar(),
       ),
       body: Builder(
-        // key: ValueKey(cardList),
         builder: (context) {
-          var cardList = context.watch<DataProvider>().thingData;
+          final cardList = context.watch<DataProvider>().thingData;
           if (cardList.isEmpty) {
             return const Text("");
           }
@@ -47,10 +29,22 @@ class MainPage extends StatelessWidget {
           for (var i = 0; i < cardList.length; i++) {
             widgets.add(ThingsList(cardList[i], i));
           }
-          return ListView(children: widgets);
+          return ListView(
+            controller: context.read<WidgetsProvider>().listViewController,
+            children: widgets,
+          );
         },
       ),
-      floatingActionButton: const ThingsAddButton(),
+      floatingActionButton: Builder(
+        builder: (context) {
+          // When the ListView is on top, show floating button.
+          final onTop = context.watch<WidgetsProvider>().onTop;
+          if (onTop) {
+            return const ThingsAddButton();
+          }
+          return const Text("");
+        }
+      ),
     );
   }
 }

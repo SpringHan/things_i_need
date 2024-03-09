@@ -131,6 +131,12 @@ class DataProvider extends ChangeNotifier {
     // notifyListeners ... functions have been called in addThing.
   }
 
+  Future<void> reorderAction() async {
+    thingData = await reorderThings(thingData);
+    await storeThings(thingData);
+    notifyListeners();
+  }
+
   void quitModifyMode() {
     newThing = ("", DateTime.now());
     initDate = newThing.$2;

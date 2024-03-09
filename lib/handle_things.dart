@@ -103,3 +103,25 @@ Future<void> storeThings(FutureOr<List<ThingData>> thingList) async {
   final fileContent = jsonEncode(originData);
   await listFile.writeAsString(fileContent);
 }
+
+Future<List<ThingData>> reorderThings(List<ThingData> things) async {
+  final List<ThingData> newThings = [];
+
+  for (final thingList in things) {
+    final ticked = <String, bool> {};
+    final unTicked = <String, bool> {};
+
+    for (final thing in thingList.things.entries) {
+      if (thing.value) {
+        ticked[thing.key] = true;
+      } else {
+        unTicked[thing.key] = false;
+      }
+    }
+
+    ticked.addEntries(unTicked.entries);
+    newThings.add(ThingData(thingList.date, ticked));
+  }
+
+  return newThings;
+}
